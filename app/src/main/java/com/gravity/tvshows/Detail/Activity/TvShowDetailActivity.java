@@ -111,7 +111,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 //                    .into(binding.ivTvShow);
 //        }
 
-        binding.tvToolbarName.setText(tvShow.getShow().getName());
+//        binding.tvToolbarName.setText(tvShow.getShow().getName());
 //        binding.tvShowName.setText(tvShow.getShow().getName());
         binding.collapseActionView.setTitle(tvShow.getShow().getName());
 
@@ -185,7 +185,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 
     @Override
     public void onSucessfullyGetImage(List<MDetailImage> imageList) {
-        if (imageList != null){
+        if (imageList != null && imageList.size() != 0){
             this.imageList = imageList;
 
             // add images to product list view with watermark

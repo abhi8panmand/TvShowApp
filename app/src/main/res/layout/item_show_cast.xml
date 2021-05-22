@@ -29,6 +29,7 @@
                         android:layout_gravity="center_horizontal"
                         android:adjustViewBounds="true"
                         android:paddingTop="@dimen/_5sdp"
+                        android:scaleType="centerCrop"
                         android:contentDescription="@string/personimage" />
                 <!-- 1242 * 1730, 207*290, 190*260, 170*240, 150*220-->
 
