@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TvShows</string>
+
+    <!-- utils strings -->
+    <string name="error_connection">Error</string>
+    <string name="error_auth_failed">Auth Failed</string>
+    <string name="error_auth_cancelled">Auth Cancelled</string>
+    <string name="error_something_wrong">Something Went wrong</string>
+    <string name="avg_rating">Avg. Rating : %1$s/10</string>
+    <string name="imdb_rating"> %1$d/10 \n IMDb</string>
+    <string name="tv_dot_com_rating"> %1$d/10 \n Tv.com</string>
+    <string name="personimage">PersonImage</string>
+    <string name="cast">Cast :</string>
+    <string name="genres">Genres : </string>
+    <string name="season">Season :</string>
+</resources>
