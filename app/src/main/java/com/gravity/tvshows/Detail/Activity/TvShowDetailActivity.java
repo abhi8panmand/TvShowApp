@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.gravity.tvshows.Detail.Adapter.TvShowCastAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowGenreAdapter;
@@ -33,11 +35,18 @@ import com.gravity.tvshows.Support.Fragment.ViewPagerFragment;
 import com.gravity.tvshows.Support.Utils;
 import com.gravity.tvshows.databinding.ActivityTvShowDetailBinding;
 import com.gravity.tvshows.databinding.ActivityTvShowDetailTrialBinding;
+import com.lopei.collageview.CollageView;
+//import com.sagrishin.collageview.CollageItemUrlData;
+//import com.sagrishin.collageview.CollageItemView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TvShowDetailActivity extends AppCompatActivity implements TvShowDetailViewInterface, Constant {
+import lombok.val;
+
+public class TvShowDetailActivity extends AppCompatActivity implements TvShowDetailViewInterface, Constant, CollageView.IconSelector {
 
     private Activity activity;
     private MTvShow tvShow;
@@ -46,6 +55,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     private List<MDetailImage> imageList =  new ArrayList<>();
     private List<MShowCast>castList = new ArrayList<>();
     private List<MShowSeason> seasonList = new ArrayList<>();
+    private List<String> Urls = new ArrayList<>();
     private int TvShowId;
     private float avgrating;
     private TvShowCastAdapter castAdapter;
@@ -190,7 +200,74 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 
             // add images to product list view with watermark
             setupViewPager(binding.viewPager, imageList, imageList.get(0).getType());
+
+/*
+
+            binding.collageViewId.itemPreviewLoader = GlideItemPreviewLoaderImpl.Builder(activity).build();
+
+            for (MDetailImage image : this.imageList){
+                Map<String, String > singlePhoto = new HashMap<>();
+                singlePhoto.put("width", image.getResolutions().getOriginal().getWidth());
+                singlePhoto.put("height", image.getResolutions().getOriginal().getHeight());
+            }
+//            Map<String, String> singlePhoto = new HashMap<>();
+//            singlePhoto.put("width", imageList.);
+//            singlePhoto.put("height", )
+
+            CollageItemUrlData();
+            singlePhoto
+            CollageItemUrlData(singlePhoto.url).apply {
+                this.width = singlePhoto.width;
+                this.height = singlePhoto.height;
+            }
+            val images = photos.map {
+            }
+            collageViewId.setItemDatas(images);
+
+            binding.collageViewId.showCollage();
+*/
+            setImageCollage();
         }
+    }
+
+    private void setImageCollage() {
+
+        CollageView collageView = (CollageView) findViewById(R.id.collageView);
+
+        for (MDetailImage image : this.imageList) {
+            Urls.add(image.getResolutions().getOriginal().getUrl());
+        }
+        collageView
+                .photoMargin(1)
+                .photoPadding(3)
+                .backgroundColor(getResources().getColor(R.color.color_grey_text))
+                .photoFrameColor(Color.WHITE)
+                .useFirstAsHeader(true) // makes first photo fit device widtdh and use full line
+                .defaultPhotosForLine(2) // sets default photos number for line of photos (can be changed by program at runtime)
+                .iconSelector(this, 0) // (or use 0 as size to wrap content)
+                .useCards(true) // adds cardview backgrounds to all photos
+                .maxWidth(100) // will resize images if their side is bigger than 100
+                .placeHolder(R.mipmap.default_image) //adds placeholder resource
+                .headerForm(CollageView.ImageForm.IMAGE_FORM_SQUARE) // sets form of image for header (if useFirstAsHeader == true)
+                .photosForm(CollageView.ImageForm.IMAGE_FORM_HALF_HEIGHT) //sets form of image for other photos
+                .loadPhotos(Urls); // here you can use Array/List of photo urls or array of resource ids
+
+
+        setImageClickListner();
+    }
+
+    private void setImageClickListner() {
+
+        binding.collageView.setOnPhotoClickListener(new CollageView.OnPhotoClickListener() {
+            @Override
+            public void onPhotoClick(int position) {
+
+        // do random stuff here
+
+            }
+
+        }
+        );
     }
 
     @Override
@@ -231,4 +308,8 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     }
 
 
+    @Override
+    public int getIconResId(int pos) {
+        return 0;
+    }
 }

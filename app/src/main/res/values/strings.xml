@@ -11,6 +11,7 @@
     <string name="tv_dot_com_rating"> %1$d/10 \n Tv.com</string>
     <string name="personimage">PersonImage</string>
     <string name="cast">Cast :</string>
+    <string name="photo">Photo :</string>
     <string name="genres">Genres : </string>
     <string name="season">Season :</string>
 </resources>
