@@ -58,7 +58,7 @@ dependencies {
 //    implementation 'androidx.fragment:fragment:1.1.0'
 //    implementation 'androidx.constraintlayout:constraintlayout-solver:2.0.4'
 
-//    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
 //    implementation 'androidx.appcompat:appcompat-resources:1.2.0'
 //    implementation 'androidx.collection:collection:1.1.0'
 //    implementation 'androidx.cursoradapter:cursoradapter:1.0.0'

@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.gravity.tvshows.API.ApiClient;
 import com.gravity.tvshows.API.ApiInterface;
 import com.gravity.tvshows.API.ResponseData;
+import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Search.Model.MTvShow;
 import com.gravity.tvshows.Search.PresenterInterface.SerachTvShowPresenterInterface;
 import com.gravity.tvshows.Search.ViewInterface.SerachTvShowViewInterface;
@@ -56,5 +57,34 @@ public class SerachTvShowPresenter implements SerachTvShowPresenterInterface {
     @Override
     public void getTvShow(Map<String, String> map) {
         getObservableSearchTvShow(map).subscribeWith(getObserverSearchTvShow());
+    }
+
+    private DisposableObserver<MShow> getObserverSearchSingleTvShow() {
+        return new DisposableObserver<MShow>() {
+            @Override
+            public void onNext(@NonNull MShow response) {
+                Utils.logthis(null, "responce "+response);
+                viewInterface.onSucessfullyGetSingleTvShow(response);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                viewInterface.onFailToGetSingleTvShow(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        };
+    }
+
+
+    private <T> Observable getObservableSearchSingleTvShow(Map<String, String> map) {
+        return ApiClient.getClient(activity).create(ApiInterface.class).searchTvShow(map).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public void getSingleShow(Map<String, String> map) {
+        getObservableSearchSingleTvShow(map).subscribeWith(getObserverSearchSingleTvShow());
     }
 }

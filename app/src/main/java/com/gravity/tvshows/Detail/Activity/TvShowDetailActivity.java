@@ -27,6 +27,7 @@ import com.gravity.tvshows.Detail.Presenter.TvShowDetailPresenter;
 import com.gravity.tvshows.Detail.ViewInterface.TvShowDetailViewInterface;
 import com.gravity.tvshows.R;
 import com.gravity.tvshows.Search.Adapter.TvShowAdapter;
+import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Support.Adapter.ImageViewPagerAdapter;
 import com.gravity.tvshows.Search.Model.MImage;
 import com.gravity.tvshows.Search.Model.MTvShow;
@@ -49,7 +50,7 @@ import lombok.val;
 public class TvShowDetailActivity extends AppCompatActivity implements TvShowDetailViewInterface, Constant, CollageView.IconSelector {
 
     private Activity activity;
-    private MTvShow tvShow;
+    private MShow tvShow;
 //    private ActivityTvShowDetailBinding binding;
     private ActivityTvShowDetailTrialBinding binding;
     private List<MDetailImage> imageList =  new ArrayList<>();
@@ -123,12 +124,12 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 
 //        binding.tvToolbarName.setText(tvShow.getShow().getName());
 //        binding.tvShowName.setText(tvShow.getShow().getName());
-        binding.collapseActionView.setTitle(tvShow.getShow().getName());
+        binding.collapseActionView.setTitle(tvShow.getName());
 
-        if (tvShow.getShow().getSummary() != null)
-            binding.showDescrption.setHtml(tvShow.getShow().getSummary());
+        if (tvShow.getSummary() != null)
+            binding.showDescrption.setHtml(tvShow.getSummary());
 
-        if (tvShow.getShow().getGenres() != null && tvShow.getShow().getGenres().size() != 0)
+        if (tvShow.getGenres() != null && tvShow.getGenres().size() != 0)
             setGenreRecyclerView();
         else
             binding.tvShowGenres.setVisibility(View.GONE);
@@ -157,7 +158,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         binding.recyclerViewGenre.setLayoutManager(linearLayoutManager);
         binding.recyclerViewGenre.setHasFixedSize(true);
         binding.recyclerViewGenre.setItemAnimator(new DefaultItemAnimator());
-        genreAdapter = new TvShowGenreAdapter(activity, tvShow.getShow().getGenres());
+        genreAdapter = new TvShowGenreAdapter(activity, tvShow.getGenres());
         binding.recyclerViewGenre.setAdapter(genreAdapter);
     }
 
@@ -176,10 +177,10 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         // To retrieve object in second Activity
 //        tvShow.add(getIntent().getSerializableExtra("TvShowModel"));
         Utils.logthis(activity, ""+getIntent().getSerializableExtra("TvShowModel"));
-        tvShow = (MTvShow) getIntent().getSerializableExtra("TvShowModel");
+        tvShow = (MShow) getIntent().getSerializableExtra("TvShowModel");
 
-        TvShowId = tvShow.getShow().getId();
-        avgrating = tvShow.getShow().getRating().getAverage();
+        TvShowId = tvShow.getId();
+        avgrating = tvShow.getRating().getAverage();
 
         callApi();
 
@@ -204,7 +205,16 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 /*
 
             binding.collageViewId.itemPreviewLoader = GlideItemPreviewLoaderImpl.Builder(activity).build();
+*/
+//            val images = photos.map { singlePhoto ->
+//                CollageItemUrlData(singlePhoto.url).apply {
+//                    this.width = singlePhoto.width
+//                    this.height = singlePhoto.height
+//                }
+//            }
+//            collageViewId.setItemDatas(images)
 
+/*
             for (MDetailImage image : this.imageList){
                 Map<String, String > singlePhoto = new HashMap<>();
                 singlePhoto.put("width", image.getResolutions().getOriginal().getWidth());

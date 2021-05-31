@@ -14,4 +14,6 @@
     <string name="photo">Photo :</string>
     <string name="genres">Genres : </string>
     <string name="season">Season :</string>
+    <string name="best_result">Best Result</string>
+    <string name="might_searching_for">Might Searching For</string>
 </resources>

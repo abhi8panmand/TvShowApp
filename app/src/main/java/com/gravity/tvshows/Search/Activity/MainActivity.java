@@ -9,10 +9,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gravity.tvshows.Detail.Activity.TvShowDetailActivity;
 import com.gravity.tvshows.R;
 import com.gravity.tvshows.Search.Adapter.TvShowAdapter;
+import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Search.Model.MTvShow;
 import com.gravity.tvshows.Search.Presenter.SerachTvShowPresenter;
 import com.gravity.tvshows.Search.ViewInterface.SerachTvShowViewInterface;
@@ -24,6 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.gravity.tvshows.Support.Constant.default_image;
+
 //public class MainActivity extends AppCompatActivity {
 public class MainActivity extends AppCompatActivity implements SerachTvShowViewInterface , TvShowAdapter.CallBack {
 
@@ -31,8 +37,10 @@ public class MainActivity extends AppCompatActivity implements SerachTvShowViewI
     private ActivityMainBinding binding;
     private SerachTvShowPresenter presenter;
     private List<MTvShow> tvShowList = new ArrayList<>();
+    private MShow show;
     private TvShowAdapter adapter;
     private GridLayoutManager manager;
+    private float avgrating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,18 @@ public class MainActivity extends AppCompatActivity implements SerachTvShowViewI
                 return false;
             }
         });
+
+        binding.cvTvShow.setOnClickListener(view -> {
+            callIntent(show);
+        });
+    }
+
+    private void callIntent(MShow show) {
+
+        Intent intent = new Intent(MainActivity.this, TvShowDetailActivity.class);
+        intent.putExtra("TvShowModel", show);
+        startActivity(intent);
+
     }
 
     private void callApi(String showname) {
@@ -81,11 +101,13 @@ public class MainActivity extends AppCompatActivity implements SerachTvShowViewI
 
         presenter = new SerachTvShowPresenter(activity, this);
         presenter.getTvShow(map);
+        presenter.getSingleShow(map);
     }
 
     @Override
     public void onSucessfullyGetTvShow(List<MTvShow> tvShow) {
 
+        binding.tvShowListHeader.setVisibility(View.VISIBLE);
         this.tvShowList.addAll(tvShow);
 //        Utils.logthis(activity, tvShowList.get(0).getShow().getName());
         adapter.notifyDataSetChanged();
@@ -99,11 +121,54 @@ public class MainActivity extends AppCompatActivity implements SerachTvShowViewI
     }
 
     @Override
-    public void onCardClick(MTvShow show, int position) {
+    public void onSucessfullyGetSingleTvShow(MShow tvShow) {
 
-        Intent intent = new Intent(MainActivity.this, TvShowDetailActivity.class);
-        intent.putExtra("TvShowModel", show);
-        startActivity(intent);
+        if (tvShow != null) {
+
+            this.show = tvShow;
+
+            binding.tvSingleShowHeader.setVisibility(View.VISIBLE);
+            binding.llSingleShow.setVisibility(View.VISIBLE);
+
+            if (show.getImage() != null && show.getImage().getMedium() != null) {
+
+                Glide.with(activity)
+                        .load(show.getImage().getOriginal())
+                        .apply(new RequestOptions()
+                                .placeholder(R.mipmap.default_image)
+                                .error(R.mipmap.default_image))
+                        .into(binding.ivTvShow);
+            }else {
+
+                Glide.with(activity)
+                        .load(default_image)
+                        .apply(new RequestOptions()
+                                .placeholder(R.mipmap.default_image)
+                                .error(R.mipmap.default_image))
+                        .into(binding.ivTvShow);
+            }
+
+            binding.tvTvShowName.setText(show.getName());
+            avgrating = show.getRating().getAverage();
+
+            binding.tvAvgRating.setText("Avg. Rating : "+avgrating+"/10");
+
+            binding.rbTvShowRating.setRating(show.getRating().getAverage());
+
+        }else {
+            binding.tvSingleShowHeader.setVisibility(View.GONE);
+            binding.llSingleShow.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onFailToGetSingleTvShow(String errorMessage) {
+        Utils.logthis(activity, errorMessage);
+    }
+
+    @Override
+    public void onCardClick(MTvShow show, int position) {
+        callIntent(show.getShow());
     }
 }
 /*

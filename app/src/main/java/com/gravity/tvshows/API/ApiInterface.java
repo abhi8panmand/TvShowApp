@@ -27,6 +27,9 @@ public interface ApiInterface {
 //    Observable<ResponseData<List<MTvShow>>> filterTvShowlisting(@Header("Authorization") String token,
 //                                                                 @QueryMap Map<String, String> map);
 
+    @GET("singlesearch/shows")
+    Observable<MShow> searchTvShow(@QueryMap Map<String, String> map);
+
     @GET("search/shows")
     Observable<List<MTvShow>> searchTvShowlisting(@QueryMap Map<String, String> map);
 

@@ -5,4 +5,6 @@ import java.util.Map;
 public interface SerachTvShowPresenterInterface {
 
     void getTvShow(Map<String, String> map);
+
+    void getSingleShow(Map<String, String> map);
 }
