@@ -6,7 +6,9 @@ import com.gravity.tvshows.API.ApiClient;
 import com.gravity.tvshows.API.ApiInterface;
 import com.gravity.tvshows.Detail.Model.MDetailImage;
 import com.gravity.tvshows.Detail.Model.MShowCast;
+import com.gravity.tvshows.Detail.Model.MShowCrew;
 import com.gravity.tvshows.Detail.Model.MShowSeason;
+import com.gravity.tvshows.Detail.Model.MTvShowAKAS;
 import com.gravity.tvshows.Detail.PresenterInterface.TvShowDetailPresenterInterface;
 import com.gravity.tvshows.Detail.ViewInterface.TvShowDetailViewInterface;
 import com.gravity.tvshows.Search.Model.MShow;
@@ -119,14 +121,59 @@ public class TvShowDetailPresenter implements TvShowDetailPresenterInterface {
         getObservableTvShowSeason(id).subscribeWith(getObserverTvShowSeason());
     }
 
+    private DisposableObserver<List<MShowCrew>> getObserverTvShowCrew() {
+        return new DisposableObserver<List<MShowCrew>>() {
+            @Override
+            public void onNext(@NonNull List<MShowCrew> response) {
+                Utils.logthis(null, "responce "+response);
+                viewInterface.onSucessfullyGetShowCrew(response);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                viewInterface.onFailToGetShowCrew(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        };
+    }
+
+    private <T> Observable getObservableTvShowCrew(int id) {
+        return ApiClient.getClient(activity).create(ApiInterface.class).getTvShowCrew(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
 
     @Override
     public void getCrew(int id) {
+        getObservableTvShowCrew(id).subscribeWith(getObserverTvShowCrew());
+    }
 
+    private DisposableObserver<List<MTvShowAKAS>> getObserverTvShowAKAS() {
+        return new DisposableObserver<List<MTvShowAKAS>>() {
+            @Override
+            public void onNext(@NonNull List<MTvShowAKAS> response) {
+                Utils.logthis(null, "responce "+response);
+                viewInterface.onSucessfullyGetShowAKAS(response);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                viewInterface.onFailToGetShowAKAS(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        };
+    }
+
+    private <T> Observable getObservableTvShowAKAS(int id) {
+        return ApiClient.getClient(activity).create(ApiInterface.class).getTvShowAKAS(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public void getAKA(int id) {
-
+        getObservableTvShowAKAS(id).subscribeWith(getObserverTvShowAKAS());
     }
 }

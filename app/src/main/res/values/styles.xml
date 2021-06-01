@@ -13,15 +13,13 @@
 
     <style name="AppTheme_Extended_AppBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textSize">@dimen/_21ssp</item>
-        <item name="android:fontFamily">@font/brushscriptstd</item>
+        <item name="android:textSize">@dimen/_19ssp</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <style name="AppTheme_Collapse_AppBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:textSize">@dimen/_16ssp</item>
-        <item name="android:fontFamily">@font/brushscriptstd</item>
+        <item name="android:textSize">@dimen/_12ssp</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
     // use for crop image

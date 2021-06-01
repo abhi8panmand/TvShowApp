@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_show_episode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            app:cardElevation="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_5sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_episode"
+                        android:layout_width="@dimen/_103sdp"
+                        android:layout_height="@dimen/_144sdp"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:contentDescription="@string/tv_show_image" />
+                    <!-- 1242 * 1730, 207*290, 190*260, 170*240, 150*220, 103*144-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_2sdp">
+
+                        <TextView
+                            android:id="@+id/tv_episode_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textSize="@dimen/_13ssp"
+                            android:textStyle="bold"
+                            android:maxLines="2"
+                            android:textColor="@color/white"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                        <TextView
+                            android:id="@+id/tv_show_air_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:maxLines="2"
+                            android:text="@string/air_date"
+                            android:gravity="start"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                        <TextView
+                            android:id="@+id/tv_show_air_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:maxLines="2"
+                            android:gravity="start"
+                            android:text="@string/air_time"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                        <TextView
+                            android:id="@+id/tv_show_season_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:gravity="start"
+                            android:text="@string/seasons"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                        <TextView
+                            android:id="@+id/tv_show_episode_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:gravity="start"
+                            android:text="@string/episode"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                        <TextView
+                            android:id="@+id/tv_episode_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_11ssp"
+                            android:gravity="start"
+                            android:text="@string/duration"
+                            android:layout_margin="@dimen/_2sdp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            <org.sufficientlysecure.htmltextview.HtmlTextView
+                android:id="@+id/show_episode_descrption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_11ssp"
+                android:maxLines="2"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</layout>

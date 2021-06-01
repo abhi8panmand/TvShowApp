@@ -107,10 +107,16 @@ public class MainActivity extends AppCompatActivity implements SerachTvShowViewI
     @Override
     public void onSucessfullyGetTvShow(List<MTvShow> tvShow) {
 
-        binding.tvShowListHeader.setVisibility(View.VISIBLE);
-        this.tvShowList.addAll(tvShow);
+        if (tvShow != null && tvShow.size() != 0){
+
+            binding.tvShowListHeader.setVisibility(View.VISIBLE);
+            this.tvShowList.addAll(tvShow);
 //        Utils.logthis(activity, tvShowList.get(0).getShow().getName());
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
+        }else {
+            binding.tvShowListHeader.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +19,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.request.RequestOptions;
 import com.gravity.tvshows.Detail.Adapter.TvShowCastAdapter;
+import com.gravity.tvshows.Detail.Adapter.TvShowCrewAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowGenreAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowSeasonAdapter;
 import com.gravity.tvshows.Detail.Model.MDetailImage;
 import com.gravity.tvshows.Detail.Model.MShowCast;
+import com.gravity.tvshows.Detail.Model.MShowCrew;
 import com.gravity.tvshows.Detail.Model.MShowSeason;
+import com.gravity.tvshows.Detail.Model.MTvShowAKAS;
 import com.gravity.tvshows.Detail.Presenter.TvShowDetailPresenter;
 import com.gravity.tvshows.Detail.ViewInterface.TvShowDetailViewInterface;
 import com.gravity.tvshows.R;
+import com.gravity.tvshows.Search.Activity.MainActivity;
 import com.gravity.tvshows.Search.Adapter.TvShowAdapter;
 import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Support.Adapter.ImageViewPagerAdapter;
@@ -47,7 +52,8 @@ import java.util.Map;
 
 import lombok.val;
 
-public class TvShowDetailActivity extends AppCompatActivity implements TvShowDetailViewInterface, Constant, CollageView.IconSelector {
+public class TvShowDetailActivity extends AppCompatActivity implements TvShowDetailViewInterface,
+        Constant, CollageView.IconSelector, TvShowSeasonAdapter.CallBack {
 
     private Activity activity;
     private MShow tvShow;
@@ -56,12 +62,14 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     private List<MDetailImage> imageList =  new ArrayList<>();
     private List<MShowCast>castList = new ArrayList<>();
     private List<MShowSeason> seasonList = new ArrayList<>();
+    private List<MShowCrew> showCrewList = new ArrayList<>();
     private List<String> Urls = new ArrayList<>();
     private int TvShowId;
     private float avgrating;
     private TvShowCastAdapter castAdapter;
     private TvShowGenreAdapter genreAdapter;
     private TvShowSeasonAdapter seasonAdapter;
+    private TvShowCrewAdapter crewAdapter;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
     private TvShowDetailPresenter presenter;
@@ -137,8 +145,9 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         binding.tvAvgRating.setText("Avg. Rating : "+avgrating+"/10");
         binding.rbTvShowRating.setRating(avgrating);
 
-        setCastRecyclerView();
         setSeasonRecyclerView();
+        setCastRecyclerView();
+//        setCrewRecyclerView();
     }
 
     private void setSeasonRecyclerView() {
@@ -147,8 +156,19 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         binding.recyclerViewSeason.setLayoutManager(gridLayoutManager);
         binding.recyclerViewSeason.setHasFixedSize(true);
         binding.recyclerViewSeason.setItemAnimator(new DefaultItemAnimator());
-        seasonAdapter = new TvShowSeasonAdapter(activity, seasonList);
+        seasonAdapter = new TvShowSeasonAdapter(activity, seasonList, this);
         binding.recyclerViewSeason.setAdapter(seasonAdapter);
+
+    }
+
+    private void setCrewRecyclerView() {
+
+        gridLayoutManager = new GridLayoutManager(activity, 2);
+        binding.recyclerViewCrew.setLayoutManager(gridLayoutManager);
+        binding.recyclerViewCrew.setHasFixedSize(true);
+        binding.recyclerViewCrew.setItemAnimator(new DefaultItemAnimator());
+        crewAdapter = new TvShowCrewAdapter(activity, showCrewList);
+        binding.recyclerViewCrew.setAdapter(crewAdapter);
 
     }
 
@@ -192,6 +212,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         presenter.getImages(TvShowId);
         presenter.getCast(TvShowId);
         presenter.getSeason(TvShowId);
+        presenter.getCrew(TvShowId);
     }
 
     @Override
@@ -317,9 +338,48 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 
     }
 
+    @Override
+    public void onSucessfullyGetShowCrew(List<MShowCrew> showCrews) {
+
+        if (showCrews != null && showCrews.size() != 0){
+//            this.showCrewList.addAll(showCrews);
+//            crewAdapter.notifyDataSetChanged();
+        }else {
+//            binding.tvShowCrew.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onFailToGetShowCrew(String errorMessage) {
+
+    }
+
+    @Override
+    public void onSucessfullyGetShowAKAS(List<MTvShowAKAS> showAKAS) {
+
+    }
+
+    @Override
+    public void onFailToGetShowAKAS(String errorMessage) {
+
+    }
+
 
     @Override
     public int getIconResId(int pos) {
         return 0;
+    }
+
+    @Override
+    public void onSeasonClick(MShowSeason showSeason, int position) {
+        callIntent(showSeason);
+    }
+
+    private void callIntent(MShowSeason showSeason) {
+
+        Intent intent = new Intent(TvShowDetailActivity.this, SeasonActivity.class);
+        intent.putExtra("TvShowSeasonModel", showSeason);
+        startActivity(intent);
+
     }
 }

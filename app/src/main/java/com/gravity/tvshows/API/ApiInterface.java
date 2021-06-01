@@ -2,7 +2,10 @@ package com.gravity.tvshows.API;
 
 import com.gravity.tvshows.Detail.Model.MDetailImage;
 import com.gravity.tvshows.Detail.Model.MShowCast;
+import com.gravity.tvshows.Detail.Model.MShowCrew;
+import com.gravity.tvshows.Detail.Model.MShowEpisode;
 import com.gravity.tvshows.Detail.Model.MShowSeason;
+import com.gravity.tvshows.Detail.Model.MTvShowAKAS;
 import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Search.Model.MTvShow;
 
@@ -41,6 +44,15 @@ public interface ApiInterface {
 
     @GET("shows/{id}/seasons")
     Observable<List<MShowSeason>> getTvShowSeason(@Path("id") int id);
+
+    @GET("seasons/{id}/episodes")
+    Observable<List<MShowEpisode>> getTvShowEpisode(@Path("id") int id);
+
+    @GET("shows/{id}/crew")
+    Observable<List<MShowCrew>> getTvShowCrew(@Path("id") int id);
+
+    @GET("shows/{id}/akas")
+    Observable<List<MTvShowAKAS>> getTvShowAKAS(@Path("id") int id);
 
 //    @GET("search/shows/{id}")
 //    Observable<Response<ResponseData<MTvShow>>> TvShowdetail(@Header("Authorization") String token,

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_show_cast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_10sdp"
+                app:cardElevation="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_5sdp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_character"
+                        android:layout_width="@dimen/_124sdp"
+                        android:layout_height="@dimen/_173sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:adjustViewBounds="true"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="@string/personimage" />
+                <!-- 1242 * 1730, 207*290, 190*260, 170*240, 150*220-->
+
+                    <TextView
+                        android:id="@+id/tv_person_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="@dimen/_14ssp"
+                        android:textStyle="bold"
+                        android:maxLines="2"
+                        android:layout_margin="@dimen/_2sdp"/>
+
+                    <TextView
+                        android:id="@+id/tv_character_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/_11ssp"
+                        android:maxLines="2"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/_2sdp"/>
+
+                    <!--<View
+                        android:id="@+id/view"
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />-->
+
+                    <TextView
+                        android:id="@+id/tv_person_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_11ssp"
+                        android:gravity="center"
+                        android:textColor="@color/color_grey_text"
+                        android:layout_margin="@dimen/_2sdp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</layout>

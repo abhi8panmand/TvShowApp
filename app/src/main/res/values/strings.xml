@@ -14,6 +14,13 @@
     <string name="photo">Photo :</string>
     <string name="genres">Genres : </string>
     <string name="season">Season :</string>
+    <string name="crew">Crew :</string>
     <string name="best_result">Best Result</string>
     <string name="might_searching_for">Might Searching For</string>
+    <string name="tv_show_image">Tv Show image</string>
+    <string name="episode">Episode : %1$d</string>
+    <string name="seasons">Season : %1$d</string>
+    <string name="duration">Duration : %1$d min</string>
+    <string name="air_date">Air Date: %1$s</string>
+    <string name="air_time">Air Time: %1$s</string>
 </resources>

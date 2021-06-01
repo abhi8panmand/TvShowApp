@@ -15,15 +15,24 @@ import com.gravity.tvshows.databinding.ItemShowSeasonBinding;
 
 import java.util.List;
 
+import javax.security.auth.callback.Callback;
+
 public class TvShowSeasonAdapter extends RecyclerView.Adapter<TvShowSeasonAdapter.ViewHolder> {
 
     private Activity activity;
     private List<MShowSeason> seasonList;
     private ItemShowSeasonBinding binding;
+    private CallBack callBack;
 
     public TvShowSeasonAdapter(Activity activity, List<MShowSeason> seasonList) {
         this.activity = activity;
         this.seasonList = seasonList;
+    }
+
+    public TvShowSeasonAdapter(Activity activity, List<MShowSeason> seasonList, CallBack callBack) {
+        this.activity = activity;
+        this.seasonList = seasonList;
+        this.callBack = callBack;
     }
 
     @NonNull
@@ -39,6 +48,10 @@ public class TvShowSeasonAdapter extends RecyclerView.Adapter<TvShowSeasonAdapte
         MShowSeason season = seasonList.get(position);
 
         holder.binding.btnSeason.setText("Season "+season.getNumber());
+
+        holder.binding.btnSeason.setOnClickListener(view -> {
+            callBack.onSeasonClick(season, position);
+        });
     }
 
     @Override
@@ -54,5 +67,10 @@ public class TvShowSeasonAdapter extends RecyclerView.Adapter<TvShowSeasonAdapte
             super(itemView.getRoot());
             binding = itemView;
         }
+    }
+
+    public interface CallBack {
+
+        void onSeasonClick(MShowSeason showSeason, int position);
     }
 }
