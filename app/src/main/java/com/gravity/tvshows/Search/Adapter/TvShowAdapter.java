@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gravity.tvshows.R;
+import com.gravity.tvshows.Search.Model.MShow;
 import com.gravity.tvshows.Search.Model.MTvShow;
 import com.gravity.tvshows.Support.Constant;
 import com.gravity.tvshows.databinding.ItemTvShowBinding;
@@ -20,15 +21,15 @@ import java.util.List;
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder> implements Constant {
 
     private Activity activity;
-    private List<MTvShow> tvShowList;
+    private List<MShow> showList;
     private ItemTvShowBinding binding;
     private float avgrating;
     private CallBack callback;
 
 
-    public TvShowAdapter(Activity activity, List<MTvShow> tvShowList, CallBack callback) {
+    public TvShowAdapter(Activity activity, List<MShow> showList, CallBack callback) {
         this.activity = activity;
-        this.tvShowList = tvShowList;
+        this.showList = showList;
         this.callback = callback;
     }
 
@@ -42,13 +43,14 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        MTvShow tvShow = this.tvShowList.get(position);
+        holder.setIsRecyclable(false);
+        MShow tvShow = this.showList.get(position);
 //        holder.binding.ivTvShow.
 
-        if (tvShow.getShow().getImage() != null && tvShow.getShow().getImage().getMedium() != null) {
+        if (tvShow.getImage() != null && tvShow.getImage().getMedium() != null) {
 
             Glide.with(activity)
-                    .load(tvShow.getShow().getImage().getOriginal())
+                    .load(tvShow.getImage().getOriginal())
                     .apply(new RequestOptions()
                             .placeholder(R.mipmap.default_image)
                             .error(R.mipmap.default_image))
@@ -64,8 +66,8 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder
                     .into(holder.binding.ivTvShow);
         }
 
-        holder.binding.tvTvShowName.setText(tvShow.getShow().getName());
-        avgrating = tvShow.getShow().getRating().getAverage();
+        holder.binding.tvTvShowName.setText(tvShow.getName());
+        avgrating = tvShow.getRating().getAverage();
 
         holder.binding.tvAvgRating.setText("Avg. Rating : "+avgrating+"/10");
         holder.binding.rbTvShowRating.setRating(avgrating);
@@ -77,7 +79,7 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return tvShowList.size();
+        return showList.size();
     }
 
 
@@ -93,6 +95,6 @@ public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.ViewHolder
 
     public interface CallBack{
 
-        void onCardClick(MTvShow show, int position);
+        void onCardClick(MShow show, int position);
     }
 }

@@ -2,7 +2,6 @@ package com.gravity.tvshows.Detail.Adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import com.gravity.tvshows.Detail.Model.MShowCast;
 import com.gravity.tvshows.R;
 import com.gravity.tvshows.Support.Constant;
 import com.gravity.tvshows.databinding.ItemShowCastBinding;
-import com.gravity.tvshows.databinding.ItemTvShowBinding;
 
 import java.util.List;
 

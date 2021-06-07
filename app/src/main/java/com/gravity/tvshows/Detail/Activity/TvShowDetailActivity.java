@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,9 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.gravity.tvshows.Detail.Adapter.TvShowAKASAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowCastAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowCrewAdapter;
 import com.gravity.tvshows.Detail.Adapter.TvShowGenreAdapter;
@@ -38,6 +42,7 @@ import com.gravity.tvshows.Search.Model.MImage;
 import com.gravity.tvshows.Search.Model.MTvShow;
 import com.gravity.tvshows.Support.Constant;
 import com.gravity.tvshows.Support.Fragment.ViewPagerFragment;
+import com.gravity.tvshows.Support.Session;
 import com.gravity.tvshows.Support.Utils;
 import com.gravity.tvshows.databinding.ActivityTvShowDetailBinding;
 import com.gravity.tvshows.databinding.ActivityTvShowDetailTrialBinding;
@@ -45,6 +50,7 @@ import com.lopei.collageview.CollageView;
 //import com.sagrishin.collageview.CollageItemUrlData;
 //import com.sagrishin.collageview.CollageItemView;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,6 +69,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     private List<MShowCast>castList = new ArrayList<>();
     private List<MShowSeason> seasonList = new ArrayList<>();
     private List<MShowCrew> showCrewList = new ArrayList<>();
+    private List<MTvShowAKAS> showAKAS = new ArrayList<>();
     private List<String> Urls = new ArrayList<>();
     private int TvShowId;
     private float avgrating;
@@ -70,9 +77,12 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     private TvShowGenreAdapter genreAdapter;
     private TvShowSeasonAdapter seasonAdapter;
     private TvShowCrewAdapter crewAdapter;
+    private TvShowAKASAdapter akasAdapter;
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
     private TvShowDetailPresenter presenter;
+
+    private List<MShow> PrefShowList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +157,8 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
 
         setSeasonRecyclerView();
         setCastRecyclerView();
-//        setCrewRecyclerView();
+        setCrewRecyclerView();
+        setAKASRecyclerView();
     }
 
     private void setSeasonRecyclerView() {
@@ -192,6 +203,16 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         binding.recyclerViewCast.setAdapter(castAdapter);
     }
 
+    private void setAKASRecyclerView() {
+
+        linearLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
+        binding.recyclerViewAkas.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewAkas.setHasFixedSize(true);
+        binding.recyclerViewAkas.setItemAnimator(new DefaultItemAnimator());
+        akasAdapter = new TvShowAKASAdapter(activity, showAKAS);
+        binding.recyclerViewAkas.setAdapter(akasAdapter);
+    }
+
     private void getIntentData() {
 
         // To retrieve object in second Activity
@@ -202,9 +223,28 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         TvShowId = tvShow.getId();
         avgrating = tvShow.getRating().getAverage();
 
+//        LoadData();
+//        prefShowList.addAll(new Session(activity).getShowList());
+//
+//        Utils.logthis(activity, "SharePrefe: \n"+PrefShowList.toString());
         callApi();
 
     }
+
+//    private void LoadData(){
+//        SharedPreferences pref = getSharedPreferences(Constant.User_Search_History, 0);
+//        Gson gson = new Gson();
+//        String json = pref.getString(Constant.SEARCH_DATA, null);
+//
+//        Type type = new TypeToken<ArrayList<MShow>>(){}.getType();
+//        PrefShowList = gson.fromJson(json, type);
+//
+//        if (PrefShowList == null){
+//            PrefShowList = new ArrayList<>();
+//        }
+//
+//        Utils.logthis(activity, "SharePrefe: \n"+PrefShowList.toString());
+//    }
 
     private void callApi() {
 
@@ -213,6 +253,7 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
         presenter.getCast(TvShowId);
         presenter.getSeason(TvShowId);
         presenter.getCrew(TvShowId);
+        presenter.getAKA(TvShowId);
     }
 
     @Override
@@ -342,10 +383,22 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     public void onSucessfullyGetShowCrew(List<MShowCrew> showCrews) {
 
         if (showCrews != null && showCrews.size() != 0){
-//            this.showCrewList.addAll(showCrews);
-//            crewAdapter.notifyDataSetChanged();
+
+//            for (int j = 0; j< showCrews.size(); j++){
+//                for (int i = j+1; i< showCrews.size(); i++){
+//                    if (showCrews.get(j).getPerson().getId() == showCrews.get(i).getPerson().getId()){
+//                        break;
+//                    }else {
+//                        if (i+1 == showCrews.size()){
+//                            this.showCrewList.add(showCrews.get(j));
+//                        }
+//                    }
+//                }
+//            }
+            this.showCrewList.addAll(showCrews);
+            crewAdapter.notifyDataSetChanged();
         }else {
-//            binding.tvShowCrew.setVisibility(View.GONE);
+            binding.tvShowCrew.setVisibility(View.GONE);
         }
     }
 
@@ -357,6 +410,13 @@ public class TvShowDetailActivity extends AppCompatActivity implements TvShowDet
     @Override
     public void onSucessfullyGetShowAKAS(List<MTvShowAKAS> showAKAS) {
 
+        if (showAKAS != null && showAKAS.size() != 0){
+
+            this.showAKAS.addAll(showAKAS);
+            akasAdapter.notifyDataSetChanged();
+        }else {
+            binding.tvShowAkas.setVisibility(View.GONE);
+        }
     }
 
     @Override

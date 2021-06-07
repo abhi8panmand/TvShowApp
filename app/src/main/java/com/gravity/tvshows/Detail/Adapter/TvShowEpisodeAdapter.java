@@ -24,6 +24,7 @@ public class TvShowEpisodeAdapter extends RecyclerView.Adapter<TvShowEpisodeAdap
     private Activity activity;
     private List<MShowEpisode> episodeList;
     private ItemTvShowEpisodeBinding binding;
+    private boolean isFlagSet = false;
 
     public TvShowEpisodeAdapter(Activity activity, List<MShowEpisode> episodeList) {
         this.activity = activity;
@@ -93,6 +94,19 @@ public class TvShowEpisodeAdapter extends RecyclerView.Adapter<TvShowEpisodeAdap
 
         try {
             holder.binding.showEpisodeDescrption.setHtml(episode.getSummary());
+
+            holder.binding.tvShowMore.setOnClickListener(view -> {
+                if (!isFlagSet){
+                    holder.binding.showEpisodeDescrption.setMaxLines(100);
+                    holder.binding.tvShowMore.setText(activity.getResources().getText(R.string.show_less));
+                    isFlagSet = true;
+                }else {
+                    holder.binding.showEpisodeDescrption.setMaxLines(2);
+                    holder.binding.tvShowMore.setText(activity.getResources().getText(R.string.show_more));
+                    isFlagSet = false;
+                }
+
+            });
         }catch (NullPointerException e){
 //            return;
         }

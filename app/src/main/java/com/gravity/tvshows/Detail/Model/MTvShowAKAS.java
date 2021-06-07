@@ -38,4 +38,40 @@ public class MTvShowAKAS implements Serializable {
 //                    "timezone":"Asia/Kamchatka"
 //                }
 //        },
+//        {
+//            "name":"A mentalista",
+//            "country":
+//                {
+//                    "name":"Hungary",
+//                    "code":"HU",
+//                    "timezone":"Europe/Budapest"
+//                }
+//        },
+//        {
+//            "name":"În mintea criminalului",
+//            "country":
+//                {
+//                    "name":"Romania",
+//                    "code":"RO",
+//                    "timezone":"Europe/Bucharest"
+//                }
+//        },
+//        {
+//            "name":"El Mentalista",
+//            "country":
+//                {
+//                    "name":"Mexico",
+//                    "code":"MX",
+//                    "timezone":"America/Monterrey"
+//                }
+//        },
+//        {
+//            "name":"Mentalist",
+//            "country":
+//                {
+//                    "name":"France",
+//                    "code":"FR",
+//                    "timezone":"Europe/Paris"
+//                }
+//        }
 //]

@@ -104,16 +104,31 @@
 
                 </LinearLayout>
 
-            <org.sufficientlysecure.htmltextview.HtmlTextView
-                android:id="@+id/show_episode_descrption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_11ssp"
-                android:maxLines="2"
-                android:layout_marginBottom="@dimen/_2sdp"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:layout_marginEnd="@dimen/_2sdp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp">
 
+                    <org.sufficientlysecure.htmltextview.HtmlTextView
+                        android:id="@+id/show_episode_descrption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:maxLines="2"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        android:id="@+id/tv_show_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/show_episode_descrption"
+                        android:layout_alignEnd="@id/show_episode_descrption"
+                        android:text="@string/show_more"
+                        android:textColor="@color/teal_200"
+                        android:textSize="@dimen/_11ssp" />
+
+                </RelativeLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

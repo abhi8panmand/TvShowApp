@@ -2,6 +2,7 @@ package com.gravity.tvshows.Detail.Adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.gravity.tvshows.Detail.Model.MShowCast;
 import com.gravity.tvshows.Detail.Model.MShowCrew;
 import com.gravity.tvshows.R;
 import com.gravity.tvshows.Support.Constant;
-import com.gravity.tvshows.databinding.ItemShowCastBinding;
 import com.gravity.tvshows.databinding.ItemShowCrewBinding;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class TvShowCrewAdapter extends RecyclerView.Adapter<TvShowCrewAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.item_show_crew, parent, false);
-        return new TvShowCrewAdapter.ViewHolder(binding);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -68,6 +67,8 @@ public class TvShowCrewAdapter extends RecyclerView.Adapter<TvShowCrewAdapter.Vi
 
         if (showCrew.getPerson().getCountry() != null)
             holder.binding.tvPersonCountry.setText(showCrew.getPerson().getCountry().getName());
+        else
+            holder.binding.tvPersonCountry.setVisibility(View.GONE);
     }
 
     @Override
